@@ -9,17 +9,22 @@ import UIKit
 /// When an interaction with the UI is performed (e.g., pressed a button), ``___VARIABLE_productName___ViewController`` **MAY**
 /// call method(s) declared here to notify the `Interactor` to perform any associated logics.
 ///
-/// By default, ``___VARIABLE_productName___Interactor`` conforms to this protocol.
-/// ``___VARIABLE_productName___ViewController``, in turn, can invoke methods declared in this protocol using its ``___VARIABLE_productName___ViewController/presentableListener`` attribute.
-/// 
-/// However, in case for RIB that does NOT have its own view, 
-/// you **NEED** to conform this protocol to the bridging `Router` instead--and letting the `Router` to invoke the methods.
+/// Conformance of this protocol is **EXCLUSIVE** to ``___VARIABLE_productName___Interactor`` (internal use).
+/// ``___VARIABLE_productName___ViewController``, in turn, can invoke methods declared in this protocol 
+/// via its ``___VARIABLE_productName___ViewController/presentableListener`` attribute.
 protocol ___VARIABLE_productName___PresentableListener: AnyObject {}
 
 
 /// The UI of `___VARIABLE_productName___RIB`.
 final class ___VARIABLE_productName___ViewController: UIViewController, ___VARIABLE_productName___Presentable, ___VARIABLE_productName___ViewControllable {
+    
+    
+    /// The reference to ``___VARIABLE_productName___Interactor``.
+    /// 
+    /// The word 'presentableListener' is a convention used in RIBs, which refer to the `Interactor`
+    /// who reacts to UI events from their descendants. (It 'listens' to them).
     weak var presentableListener: ___VARIABLE_productName___PresentableListener?
+    
 }
 
 

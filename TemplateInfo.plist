@@ -77,6 +77,11 @@
 			<string>true</string>
 			<key>NotPersisted</key>
 			<string>true</string>
+			<key>RequiredOptions</key>
+			<dict>
+				<key>ancestral</key>
+				<string>false</string>
+			</dict>
 		</dict>
 		<dict>
 			<key>Identifier</key>
@@ -103,13 +108,13 @@
 		</dict>
 		<dict>
 			<key>Identifier</key>
-			<string>isRoot</string>
+			<string>ancestral</string>
 			<key>Required</key>
 			<string>true</string>
 			<key>Name</key>
 			<string>Launch RIB</string>
 			<key>Description</key>
-			<string>Intended for RIB that is invoked by app launch.</string>
+			<string>Configured view-ful RIB template that is to be invoked upon app launch.</string>
 			<key>Type</key>
 			<string>checkbox</string>
 			<key>Default</key>
