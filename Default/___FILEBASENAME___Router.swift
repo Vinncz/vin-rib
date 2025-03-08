@@ -45,7 +45,7 @@ final class ___VARIABLE_productName___Router: Router<___VARIABLE_productName___I
         // TODO: Constructor inject child builder protocols.
         // childBuilder: /*ChildRIBName*/Buildable
     ) {
-        self.viewController = viewController
+        self.controlledViewController = viewController
         super.init(interactor: interactor)
         interactor.router = self
     }
