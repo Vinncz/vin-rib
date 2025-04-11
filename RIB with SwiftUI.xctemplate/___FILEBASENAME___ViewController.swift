@@ -1,3 +1,4 @@
+import Foundation
 import RIBs
 import RxSwift
 import SnapKit
@@ -13,7 +14,7 @@ protocol ___VARIABLE_productName___PresentableListener: AnyObject {}
  
 
 /// The visible region of `___VARIABLE_productName___RIB`.
-final class ___VARIABLE_productName___ViewController: UIViewController, ___VARIABLE_productName___ViewControllable {
+final class ___VARIABLE_productName___ViewController: UIViewController {
     
     
     /// Reference to ``___VARIABLE_productName___Interactor``.
@@ -61,6 +62,12 @@ final class ___VARIABLE_productName___ViewController: UIViewController, ___VARIA
     }
     
 }
+
+
+
+/// Conformance to the ``___VARIABLE_productName___ViewControllable`` protocol.
+/// Contains everything accessible or invokable by ``___VARIABLE_productName___Router``
+extension ___VARIABLE_productName___ViewController: ___VARIABLE_productName___ViewControllable {}
 
 
 

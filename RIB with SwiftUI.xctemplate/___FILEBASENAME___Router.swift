@@ -20,7 +20,7 @@ protocol ___VARIABLE_productName___ViewControllable: ViewControllable {}
 
 
 /// The attachment point of `___VARIABLE_productName___RIB`.
-final class ___VARIABLE_productName___Router: LaunchRouter<___VARIABLE_productName___Interactable, ___VARIABLE_productName___ViewControllable> {
+final class ___VARIABLE_productName___Router: ViewableRouter<___VARIABLE_productName___Interactable, ___VARIABLE_productName___ViewControllable> {
     
     
     /// Constructs an instance of ``___VARIABLE_productName___Router``.
