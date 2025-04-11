@@ -50,5 +50,5 @@ final class ___VARIABLE_productName___Router: Router<___VARIABLE_productName___I
 
 
 /// Conformance extension to the ``___VARIABLE_productName___Routing`` protocol.
-/// Contains everything accessible or invokable by ``___VARIABLE_productName___Interactor``
+/// Contains everything accessible or invokable by ``___VARIABLE_productName___Interactor``.
 extension ___VARIABLE_productName___Router: ___VARIABLE_productName___Routing {}

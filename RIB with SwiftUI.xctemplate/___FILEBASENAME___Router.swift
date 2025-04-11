@@ -20,7 +20,7 @@ protocol ___VARIABLE_productName___ViewControllable: ViewControllable {}
 
 
 /// The attachment point of `___VARIABLE_productName___RIB`.
-final class ___VARIABLE_productName___Router: LaunchRouter<___VARIABLE_productName___Interactable, ___VARIABLE_productName___ViewControllable> {
+final class ___VARIABLE_productName___Router: ViewableRouter<___VARIABLE_productName___Interactable, ___VARIABLE_productName___ViewControllable> {
     
     
     /// Constructs an instance of ``___VARIABLE_productName___Router``.
@@ -36,5 +36,5 @@ final class ___VARIABLE_productName___Router: LaunchRouter<___VARIABLE_productNa
 
 
 /// Conformance extension to the ``___VARIABLE_productName___Routing`` protocol.
-/// Contains everything accessible or invokable by ``___VARIABLE_productName___Interactor``
+/// Contains everything accessible or invokable by ``___VARIABLE_productName___Interactor``.
 extension ___VARIABLE_productName___Router: ___VARIABLE_productName___Routing {}

@@ -5,7 +5,6 @@ import RIBs
 /// An empty set of properties. As the ancestral RIB, 
 /// `___VARIABLE_productName___RIB` does not require any dependencies from its parent scope.
 protocol ___VARIABLE_productName___Dependency: Dependency {}
-extension EmptyComponent: ___VARIABLE_productName___Dependency {}
 
 
 
@@ -25,7 +24,7 @@ final class ___VARIABLE_productName___Component: Component<___VARIABLE_productNa
 
 
 
-/// Conformance extension to this RIB's children's `Dependency` protocols.
+/// Conformance to this RIB's children's `Dependency` protocols.
 extension ___VARIABLE_productName___Component {}
 
 
@@ -36,7 +35,8 @@ protocol ___VARIABLE_productName___Buildable: Buildable {
     
     
     /// Constructs the `___VARIABLE_productName___RIB`.
-    func build() -> LaunchRouting
+    /// - Parameter listener: The `Interactor` of this RIB's parent.
+    func build(withListener listener: ___VARIABLE_productName___Listener) -> ___VARIABLE_productName___Routing
     
 }
 
@@ -47,13 +47,18 @@ final class ___VARIABLE_productName___Builder: Builder<___VARIABLE_productName__
     
     
     /// Creates an instance of ``___VARIABLE_productName___Builder``.
-    init() { super.init(dependency: EmptyComponent()) }
+    /// - Parameter dependency: Instance of other RIB's `Component` that conforms to this RIB's `Dependency` protocol.
+    override init(dependency: ___VARIABLE_productName___Dependency) {
+        super.init(dependency: dependency)
+    }
     
     
     /// Constructs the `___VARIABLE_productName___RIB`.
-    func build() -> LaunchRouting {
+    /// - Parameter listener: The `Interactor` of this RIB's parent.
+    func build(withListener listener: ___VARIABLE_productName___Listener) -> ___VARIABLE_productName___Routing {
         let component  = ___VARIABLE_productName___Component(dependency: dependency)
         let interactor = ___VARIABLE_productName___Interactor(component: component)
+            interactor.listener = listener
         
         return ___VARIABLE_productName___Router(
             interactor: interactor, 

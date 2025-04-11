@@ -48,7 +48,7 @@ final class ___VARIABLE_productName___Interactor: PresentableInteractor<___VARIA
     weak var listener: ___VARIABLE_productName___Listener?
     
     
-    // Reference to the component of this RIB.
+    /// Reference to the component of this RIB.
     var component: ___VARIABLE_productName___Component
     
     

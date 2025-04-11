@@ -20,6 +20,7 @@ protocol ___VARIABLE_productName___Dependency: Dependency {
 /// Provides dependencies needed by all RIBs that will ever attach themselves to ``___VARIABLE_productName___Router``.
 final class ___VARIABLE_productName___Component: Component<___VARIABLE_productName___Dependency> {
     
+    /// A `UIViewController` that can be controlled by `___VARIABLE_productName___RIB`.
     // TODO: Convert to camelCase.
     //  ↓
     var ___VARIABLE_productName___ViewController: ___VARIABLE_productName___ViewControllable {
@@ -65,7 +66,7 @@ final class ___VARIABLE_productName___Builder: Builder<___VARIABLE_productName__
     /// - Parameter listener: The `Interactor` of this RIB's parent.
     func build(withListener listener: ___VARIABLE_productName___Listener) -> ___VARIABLE_productName___Routing {
         let component  = ___VARIABLE_productName___Component(dependency: dependency)
-        let interactor = ___VARIABLE_productName___Interactor()
+        let interactor = ___VARIABLE_productName___Interactor(component: component)
             interactor.listener = listener
             
         return ___VARIABLE_productName___Router(
