@@ -6,7 +6,7 @@ import SwiftUI
 struct ___VARIABLE_productName___SwiftUIView: View {
     
     
-    /// Two-ways communicator between ``___VARIABLE_productNameInteractor`` and self.
+    /// Two-ways communicator between ``___VARIABLE_productName___Interactor`` and self.
     @Bindable var viewModel: ___VARIABLE_productName___SwiftUIViewModel
     
     
