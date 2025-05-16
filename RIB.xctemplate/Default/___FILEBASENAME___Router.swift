@@ -41,6 +41,10 @@ final class ___VARIABLE_productName___Router: Router<___VARIABLE_productName___I
     }
     
     
+    /// Customization point that is invoked after self becomes active.
+    override func didLoad() {}
+    
+    
     /// Customization point that is invoked before self is detached.
     /// Used to remove any views this RIB may have added to the view hierarchy.
     func cleanupViews() {}

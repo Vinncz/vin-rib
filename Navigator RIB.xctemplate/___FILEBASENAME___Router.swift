@@ -1,4 +1,5 @@
 import RIBs
+import UIKit
 
 
 
@@ -25,17 +26,29 @@ protocol ___VARIABLE_productName___Interactable: Interactable {
 protocol ___VARIABLE_productName___ViewControllable: ViewControllable {
     
     
-    /// Attaches the given `ViewControllable` into the view hierarchy, becoming the top-most view controller.
-    /// - Parameter newFlow: The `ViewControllable` to be attached.
-    /// - Parameter completion: A closure to be executed after the operation is complete.
-    /// 
-    /// > Note: You are responsible for removing the previous `ViewControllable` from the view hierarchy.
-    func attach(newFlow: ViewControllable, completion: (() -> Void)?)
+    /// Pushes the given `ViewControllable` onto the navigation stack.
+    /// - Parameter viewControllable: The `ViewControllable` to be pushed.
+    /// - Parameter animated: A Boolean value that indicates whether the transition should be animated.
+    func push(_ viewControllable: ViewControllable, animated: Bool)
     
     
-    /// Clears the  `ViewControllable` from the view hierarchy.
-    /// - Parameter completion: A closure to be executed after the cleanup is complete.
-    func clear(completion: (() -> Void)?)
+    /// Pops the top view controller off the navigation stack.
+    /// - Parameter animated: A Boolean value that indicates whether the transition should be animated.
+    /// - Returns: An optional view controller that was popped.
+    @discardableResult func pop(animated: Bool) -> UIViewController?
+    
+    
+    /// Pops all view controllers on the navigation stack until the root view controller is at the top.
+    /// - Parameter animated: A Boolean value that indicates whether the transition should be animated.
+    /// - Note: This method does not remove the root view controller from the navigation stack.
+    /// - Returns: An optional array of view controllers that were popped.
+    @discardableResult func popToRoot(animated: Bool) -> [UIViewController]?
+    
+    
+    /// Sets the view controllers of the navigation stack.
+    /// - Parameter viewControllables: An array of `ViewControllable` to be set as the new view controllers.
+    /// - Parameter animated: A Boolean value that indicates whether the transition should be animated.
+    func set(_ viewControllables: [ViewControllable], animated: Bool)
     
 }
 
@@ -68,7 +81,7 @@ extension ___VARIABLE_productName___Router: ___VARIABLE_productName___Routing {
     
     /// Cleanses the view hierarchy of any `ViewControllable` instances this RIB may have added.
     func cleanupViews() {
-        viewController.clear(completion: nil)
+        viewController.set([], animated: false)
         // TODO: detach any child RIBs
         // TODO: nullify any references to child RIBs
     }

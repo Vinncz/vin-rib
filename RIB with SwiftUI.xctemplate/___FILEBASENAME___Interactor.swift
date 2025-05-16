@@ -5,7 +5,17 @@ import RxSwift
 
 /// Contract adhered to by ``___VARIABLE_productName___Router``, listing the attributes and/or actions 
 /// that ``___VARIABLE_productName___Interactor`` is allowed to access or invoke.
-protocol ___VARIABLE_productName___Routing: ViewableRouting {}
+protocol ___VARIABLE_productName___Routing: ViewableRouting {
+    
+    
+    /// Removes the view hierarchy from any `ViewControllable` instances this RIB may have added.
+    func clearViewControllers()
+    
+    
+    /// Removes the hosting controller (swiftui embed) from the view hierarchy and deallocates it.
+    func detachSwiftUI()
+    
+}
 
 
 
@@ -58,11 +68,9 @@ final class ___VARIABLE_productName___Interactor: PresentableInteractor<___VARIA
     
     /// Constructs an instance of ``___VARIABLE_productName___Interactor``.
     /// - Parameter component: The component of this RIB.
-    init(component: ___VARIABLE_productName___Component) {
+    init(component: ___VARIABLE_productName___Component, presenter: ___VARIABLE_productName___Presentable) {
         self.component = component
-        // TODO: Convert to camelCase.
-        //                        ↓
-        let presenter = component.___VARIABLE_productName___ViewController
+        
         super.init(presenter: presenter)
         
         presenter.presentableListener = self
@@ -79,6 +87,9 @@ final class ___VARIABLE_productName___Interactor: PresentableInteractor<___VARIA
     /// Customization point that is invoked before self is fully detached.
     override func willResignActive() {
         super.willResignActive()
+        presenter.unbindViewModel()
+        router?.clearViewControllers()
+        router?.detachSwiftUI()
     }
     
     

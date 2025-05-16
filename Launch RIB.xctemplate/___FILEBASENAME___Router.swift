@@ -25,21 +25,17 @@ protocol ___VARIABLE_productName___Interactable: Interactable {
 protocol ___VARIABLE_productName___ViewControllable: ViewControllable {
     
     
-    /// Inserts the given `ViewControllable` into the view hierarchy.
-    /// - Parameter newFlow: The `ViewControllable` to be inserted.
-    /// - Parameter completion: A closure to be executed after the insertion is complete.
+    /// Attaches the given `ViewControllable` into the view hierarchy, becoming the top-most view controller.
+    /// - Parameter newFlow: The `ViewControllable` to be attached.
+    /// - Parameter completion: A closure to be executed after the operation is complete.
     /// 
-    /// The default implementation of this method adds the new `ViewControllable` as a child view controller
-    /// and adds its view as a subview of the current view controller's view.
-    /// - Note: The default implementation of this method REMOVES the previous `ViewControllable` from the view hierarchy.
-    func transition(to newFlow: ViewControllable, completion: (() -> Void)?)
+    /// > Note: You are responsible for removing the previous `ViewControllable` from the view hierarchy.
+    func attach(newFlow: ViewControllable, completion: (() -> Void)?)
     
     
-    /// Clears any `ViewControllable` from the view hierarchy.
+    /// Clears the  `ViewControllable` from the view hierarchy.
     /// - Parameter completion: A closure to be executed after the cleanup is complete.
-    /// 
-    /// The default implementation of this method removes the current `ViewControllable` from the view hierarchy.
-    func cleanUp(completion: (() -> Void)?)
+    func clear(completion: (() -> Void)?)
     
 }
 
@@ -57,10 +53,24 @@ final class ___VARIABLE_productName___Router: LaunchRouter<___VARIABLE_productNa
         interactor.router = self
     }
     
+    
+    /// Customization point that is invoked after self becomes active.
+    override func didLoad() {}
+    
 }
 
 
 
 /// Conformance extension to the ``___VARIABLE_productName___Routing`` protocol.
 /// Contains everything accessible or invokable by ``___VARIABLE_productName___Interactor``.
-extension ___VARIABLE_productName___Router: ___VARIABLE_productName___Routing {}
+extension ___VARIABLE_productName___Router: ___VARIABLE_productName___Routing {
+        
+    
+    /// Cleanses the view hierarchy of any `ViewControllable` instances this RIB may have added.
+    func cleanupViews() {
+        viewController.clear(completion: nil)
+        // TODO: detach any child RIBs
+        // TODO: nullify any references to child RIBs
+    }
+    
+}

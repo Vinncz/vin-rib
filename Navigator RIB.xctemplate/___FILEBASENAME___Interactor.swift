@@ -1,15 +1,28 @@
 import RIBs
 import RxSwift
+import UIKit
 
 
 
 /// Contract adhered to by ``___VARIABLE_productName___Router``, listing the attributes and/or actions 
 /// that ``___VARIABLE_productName___Interactor`` is allowed to access or invoke.
-protocol ___VARIABLE_productName___Routing: Routing {
+protocol ___VARIABLE_productName___Routing: ViewableRouting {
         
     
     /// Cleanses the view hierarchy of any `ViewControllable` instances this RIB may have added.
     func cleanupViews()
+    
+}
+
+
+
+/// Contract adhered to by ``___VARIABLE_productName___ViewController``, listing the attributes and/or actions
+/// that ``___VARIABLE_productName___Interactor`` is allowed to access or invoke.
+protocol ___VARIABLE_productName___Presentable: Presentable {
+    
+    
+    /// Reference to ``___VARIABLE_productName___Interactor``.
+    var presentableListener: ___VARIABLE_productName___PresentableListener? { get set }
     
 }
 
@@ -23,7 +36,7 @@ protocol ___VARIABLE_productName___Listener: AnyObject {}
 
 /// The functionality centre of `___VARIABLE_productName___RIB`, where flow, communication, and coordination
 /// are determined and initiated from.
-final class ___VARIABLE_productName___Interactor: Interactor, ___VARIABLE_productName___Interactable {
+final class ___VARIABLE_productName___Interactor: PresentableInteractor<___VARIABLE_productName___Presentable>, ___VARIABLE_productName___Interactable {
     
     
     /// Reference to ``___VARIABLE_productName___Router``.
@@ -40,8 +53,12 @@ final class ___VARIABLE_productName___Interactor: Interactor, ___VARIABLE_produc
     
     /// Constructs an instance of ``___VARIABLE_productName___Interactor``.
     /// - Parameter component: The component of this RIB.
-    init(component: ___VARIABLE_productName___Component) {
+    init(component: ___VARIABLE_productName___Component, presenter: ___VARIABLE_productName___Presentable) {
         self.component = component
+        
+        super.init(presenter: presenter)
+        
+        presenter.presentableListener = self
     }
     
     
@@ -51,9 +68,16 @@ final class ___VARIABLE_productName___Interactor: Interactor, ___VARIABLE_produc
     }
     
     
-    /// Customization point that is invoked before self is detached.
+    /// Customization point that is invoked before self is fully detached.
     override func willResignActive() {
         super.willResignActive()
+        router?.cleanupViews()
     }
     
 }
+
+
+
+/// Conformance to the ``___VARIABLE_productName___PresentableListener`` protocol.
+/// Contains everything accessible or invokable by ``___VARIABLE_productName___ViewController``.
+extension ___VARIABLE_productName___Interactor: ___VARIABLE_productName___PresentableListener {}

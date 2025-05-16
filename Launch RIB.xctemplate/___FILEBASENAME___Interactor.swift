@@ -5,7 +5,13 @@ import RxSwift
 
 /// Contract adhered to by ``___VARIABLE_productName___Router``, listing the attributes and/or actions 
 /// that ``___VARIABLE_productName___Interactor`` is allowed to access or invoke.
-protocol ___VARIABLE_productName___Routing: ViewableRouting {}
+protocol ___VARIABLE_productName___Routing: ViewableRouting {
+        
+    
+    /// Cleanses the view hierarchy of any `ViewControllable` instances this RIB may have added.
+    func cleanupViews()
+    
+}
 
 
 
@@ -51,6 +57,7 @@ final class ___VARIABLE_productName___Interactor: PresentableInteractor<___VARIA
         // TODO: Convert to camelCase.
         //                        ↓
         let presenter = component.___VARIABLE_productName___ViewController
+        
         super.init(presenter: presenter)
         
         presenter.presentableListener = self
@@ -66,6 +73,7 @@ final class ___VARIABLE_productName___Interactor: PresentableInteractor<___VARIA
     /// Customization point that is invoked before self is fully detached.
     override func willResignActive() {
         super.willResignActive()
+        router?.cleanupViews()
     }
     
 }

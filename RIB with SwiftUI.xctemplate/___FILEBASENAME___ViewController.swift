@@ -29,6 +29,10 @@ final class ___VARIABLE_productName___ViewController: UIViewController {
     var hostingController: UIHostingController<___VARIABLE_productName___SwiftUIView>?
     
     
+    /// Reference to the active (presented) `ViewControllable`.
+    var activeFlow: (any ViewControllable)?
+    
+    
     /// Customization point that is invoked after self enters the view hierarchy.
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -67,7 +71,48 @@ final class ___VARIABLE_productName___ViewController: UIViewController {
 
 /// Conformance to the ``___VARIABLE_productName___ViewControllable`` protocol.
 /// Contains everything accessible or invokable by ``___VARIABLE_productName___Router``.
-extension ___VARIABLE_productName___ViewController: ___VARIABLE_productName___ViewControllable {}
+extension ___VARIABLE_productName___ViewController: ___VARIABLE_productName___ViewControllable {
+    
+    
+    /// Attaches the given `ViewControllable` into the view hierarchy, becoming the top-most view controller.
+    /// - Parameter newFlow: The `ViewControllable` to be attached.
+    /// - Parameter completion: A closure to be executed after the operation is complete.
+    /// 
+    /// > Note: You are responsible for removing the previous `ViewControllable` from the view hierarchy.
+    func attach(newFlow: ViewControllable, completion: (() -> Void)?) {
+        self.activeFlow = newFlow
+        
+        self.addChild(newFlow.uiviewController)
+        self.view.addSubview(newFlow.uiviewController.view)
+        newFlow.uiviewController.didMove(toParent: self)
+        
+        completion?()
+    }
+    
+    
+    /// Clears the  `ViewControllable` from the view hierarchy.
+    /// - Parameter completion: A closure to be executed after the cleanup is complete.
+    func clear(completion: (() -> Void)?) {
+        self.activeFlow?.uiviewController.view.removeFromSuperview()
+        self.activeFlow?.uiviewController.removeFromParent()
+        self.activeFlow = nil
+        
+        completion?()
+    }
+    
+    
+    /// Removes the hosting controller from the view hierarchy and deallocates it.
+    func nilHostingViewController() {
+        if let hostingController {
+            hostingController.view.removeFromSuperview()
+            hostingController.removeFromParent()
+            hostingController.didMove(toParent: nil)
+        }
+        
+        self.hostingController = nil
+    }
+    
+}
 
 
 
