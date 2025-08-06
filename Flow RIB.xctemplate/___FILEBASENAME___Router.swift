@@ -99,7 +99,7 @@ final class ___VARIABLE_productName___Router: ViewableRouter<___VARIABLE_product
     
     
     /// Initializes an instance of ``___VARIABLE_productName___Router``.
-    /// - Parameter 
+    /// - Parameters:
     ///   - interactor: The interactor of this RIB.
     ///   - navigationController: The navigation controller managing this RIB's navigation stack.
     ///   - viewController: The initial screen of this RIB.

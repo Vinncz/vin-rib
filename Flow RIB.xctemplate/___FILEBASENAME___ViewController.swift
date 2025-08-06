@@ -6,7 +6,7 @@ import UIKit
 
 
 
-/// Interface implemented by ``___VARIABLE_productName___Interactor`` to handle user interaction events from the view.
+/// Interface implemented by ``___VARIABLE_productName___Interactor`` to handle user interaction or lifecycle events from the view.
 protocol ___VARIABLE_productName___PresentableListener: AnyObject {}
  
  
