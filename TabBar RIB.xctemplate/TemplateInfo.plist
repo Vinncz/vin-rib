@@ -31,7 +31,7 @@
 			<key>Required</key>
 			<string>true</string>
 			<key>Name</key>
-			<string>Name for the RIB that functions as navigation controller</string>
+			<string>The name for this RIB</string>
 			<key>Description</key>
 			<string>The name for this RIB.</string>
 			<key>Type</key>

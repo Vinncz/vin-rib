@@ -28,7 +28,7 @@ protocol ___VARIABLE_productName___ViewControllable: ViewControllable {
     /// Sets the view controllers of the navigation stack.
     /// 
     /// - Parameters:
-    ///   - tabs: An array of `ViewControllable` to be set as the new view controllers.
+    ///   - viewControllables: An array of `ViewControllable` to be set as the new view controllers.
     ///   - animated: A Boolean value that indicates whether the transition should be animated.
     func set(tabs viewControllables: [ViewControllable], animated: Bool)
     

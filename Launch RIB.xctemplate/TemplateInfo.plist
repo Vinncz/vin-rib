@@ -31,9 +31,9 @@
 			<key>Required</key>
 			<string>true</string>
 			<key>Name</key>
-			<string>Name for the ancestral RIB</string>
+			<string>The name for this RIB</string>
 			<key>Description</key>
-			<string>The name of the first RIB placed into the tree.</string>
+			<string>The name for this RIB</string>
 			<key>Type</key>
 			<string>text</string>
 			<key>NotPersisted</key>
