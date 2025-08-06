@@ -3,20 +3,18 @@ import RxSwift
 
 
 
-/// Contract adhered to by ``___VARIABLE_productName___Router``, listing the attributes and/or actions 
-/// that ``___VARIABLE_productName___Interactor`` is allowed to access or invoke.
+/// Interface exposed by ``___VARIABLE_productName___Router`` to enable RIB tree manipulation.
 protocol ___VARIABLE_productName___Routing: ViewableRouting {
         
     
-    /// Cleanses the view hierarchy of any `ViewControllable` instances this RIB may have added.
-    func cleanupViews()
+    /// Removes any `ViewControllable` this RIB may have added to the view hierarchy.
+    func clearViewControllers()
     
 }
 
 
 
-/// Contract adhered to by ``___VARIABLE_productName___ViewController``, listing the attributes and/or actions
-/// that ``___VARIABLE_productName___Interactor`` is allowed to access or invoke.
+/// Interface exposed by ``___VARIABLE_productName___ViewController`` to enable view manipulation.
 protocol ___VARIABLE_productName___Presentable: Presentable {
     
     
@@ -27,14 +25,9 @@ protocol ___VARIABLE_productName___Presentable: Presentable {
 
 
 
-/// Contract adhered to by the Interactor of `___VARIABLE_productName___RIB`'s parent, listing the attributes and/or actions
-/// that ``___VARIABLE_productName___Interactor`` is allowed to access or invoke.
-protocol ___VARIABLE_productName___Listener: AnyObject {}
-
-
-
-/// The functionality centre of `___VARIABLE_productName___RIB`, where flow, communication, and coordination
-/// are determined and initiated from.
+/// Implements business logic and lifecycle coordination for `___VARIABLE_productName___RIB`.
+///
+/// Acts as the source of truth for state, handles user intent, and delegates navigation to the router.
 final class ___VARIABLE_productName___Interactor: PresentableInteractor<___VARIABLE_productName___Presentable>, ___VARIABLE_productName___Interactable {
     
     
@@ -42,21 +35,16 @@ final class ___VARIABLE_productName___Interactor: PresentableInteractor<___VARIA
     weak var router: ___VARIABLE_productName___Routing?
     
     
-    /// Reference to this RIB's parent's Interactor.
-    weak var listener: ___VARIABLE_productName___Listener?
-    
-    
     /// Reference to the component of this RIB.
     var component: ___VARIABLE_productName___Component
     
     
     /// Constructs an instance of ``___VARIABLE_productName___Interactor``.
-    /// - Parameter component: The component of this RIB.
-    init(component: ___VARIABLE_productName___Component) {
+    /// - Parameters: 
+    ///   - component: The component of this RIB.
+    ///   - presenter: The presenter for this RIB.
+    init(component: ___VARIABLE_productName___Component, presenter: any ___VARIABLE_productName___Presentable) {
         self.component = component
-        // TODO: Convert to camelCase.
-        //                        ↓
-        let presenter = component.___VARIABLE_productName___ViewController
         
         super.init(presenter: presenter)
         
@@ -73,7 +61,7 @@ final class ___VARIABLE_productName___Interactor: PresentableInteractor<___VARIA
     /// Customization point that is invoked before self is fully detached.
     override func willResignActive() {
         super.willResignActive()
-        router?.cleanupViews()
+        router?.clearViewControllers()
     }
     
 }
