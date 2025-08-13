@@ -15,7 +15,7 @@ protocol ___VARIABLE_productName___Routing: ViewableRouting {
 
 
 
-/// Interface exposed by ``___VARIABLE_productName___ViewController`` to enable view manipulation.
+/// Interface exposed by ``___VARIABLE_productName___TabBarController`` to enable view manipulation.
 protocol ___VARIABLE_productName___Presentable: Presentable {
     
     

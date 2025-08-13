@@ -1,5 +1,5 @@
 # ___VARIABLE_productName___RIB
-A self-contained RIB that owns a tab bar controller. Is classified as a `TabBarRIB`.
+A self-contained RIB that owns a tab bar controller. Is classified as a `TabBar RIB`.
 
 ## Topics
 ### Composing the RIB
