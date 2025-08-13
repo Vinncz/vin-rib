@@ -1,5 +1,5 @@
 # ___VARIABLE_productName___RIB
-An ancestral RIB. Every other RIB is a descendant of this RIB. Is classified as a `LaunchRIB`.
+An ancestral RIB. Every other RIB is a descendant of this RIB. Is classified as a `Launch RIB`.
 
 ## Topics
 ### Composing the RIB

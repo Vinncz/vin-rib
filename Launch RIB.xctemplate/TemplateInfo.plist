@@ -5,7 +5,7 @@
 	<key>Kind</key>
 	<string>Xcode.IDEFoundation.TextSubstitutionFileTemplateKind</string>
 	<key>Summary</key>
-	<string>RIB Launch Unit</string>
+	<string>Launch RIB</string>
 	<key>Description</key>
 	<string>Ancestral RIB placed at the root of the RIBs Tree.</string>
 	<key>SortOrder</key>
