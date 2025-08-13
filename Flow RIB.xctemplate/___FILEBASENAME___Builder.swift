@@ -19,7 +19,7 @@ extension ___VARIABLE_productName___Component {}
 
 
 
-/// A type that can build a `___VARIABLE_productName___RIB` and wire its internal dependencies.
+/// Type that can build a `___VARIABLE_productName___RIB` and wire its internal dependencies.
 protocol ___VARIABLE_productName___Buildable: Buildable {
     
     

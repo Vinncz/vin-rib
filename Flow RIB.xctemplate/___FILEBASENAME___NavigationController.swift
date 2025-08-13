@@ -7,7 +7,7 @@ import UIKit
 
 /// Interface implemented by ``___VARIABLE_productName___Interactor`` to handle user interaction events from the view.
 protocol ___VARIABLE_productName___NavigableListener: AnyObject {
-        
+    
     
     /// Informs ``___VARIABLE_productName___Router`` that the navigation controller has exited the view hierarchy; 
     /// commonly due to being popped off a navigation stack or dismissed.

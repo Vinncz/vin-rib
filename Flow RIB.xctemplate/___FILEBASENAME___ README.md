@@ -1,5 +1,5 @@
 # ___VARIABLE_productName___RIB
-A self-contained RIB that owns a navigation controller and the root view controller within the stack. Is classified as a `FlowRIB`.
+A self-contained RIB that owns a navigation controller and the root view controller within the stack. Is classified as a `Flow RIB`.
 
 ## Topics
 ### Composing the RIB
