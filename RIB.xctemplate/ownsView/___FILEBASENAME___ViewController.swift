@@ -5,9 +5,15 @@ import UIKit
 
 
 
-/// Contract adhered to by ``___VARIABLE_productName___Interactor``, listing the attributes and/or actions 
-/// that ``___VARIABLE_productName___ViewController`` is allowed to access or invoke.
-protocol ___VARIABLE_productName___PresentableListener: AnyObject {}
+/// Interface implemented by ``___VARIABLE_productName___Interactor`` to handle user interaction or lifecycle events from the view.
+protocol ___VARIABLE_productName___PresentableListener: AnyObject {
+    
+    
+    /// Informs ``___VARIABLE_productName___Router`` that the navigation controller has exited the view hierarchy; 
+    /// commonly due to being popped off a navigation stack or dismissed.
+    func didExitViewHierarchy()
+    
+}
  
  
 
@@ -19,13 +25,23 @@ final class ___VARIABLE_productName___ViewController: UIViewController {
     weak var presentableListener: ___VARIABLE_productName___PresentableListener?
     
     
-    /// Reference to the active (presented) `ViewControllable`.
-    var activeFlow: (any ViewControllable)?
+    /// Reference to the overlaid `ViewControllable`.
+    var overlaidViewControllable: (any ViewControllable)?
     
     
     /// Customization point that is invoked after self enters the view hierarchy.
     override func viewDidLoad() {
         super.viewDidLoad()
+    }
+    
+    
+    /// Customization point that is invoked after self has fully been dismissed, 
+    /// covered, or otherwise hidden, when any transition animations have completed.
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        if isMovingFromParent || isBeingDismissed {
+            presentableListener?.didExitViewHierarchy()
+        }
     }
     
 }
@@ -37,31 +53,48 @@ final class ___VARIABLE_productName___ViewController: UIViewController {
 extension ___VARIABLE_productName___ViewController: ___VARIABLE_productName___ViewControllable {
     
     
-    /// Attaches the given `ViewControllable` into the view hierarchy, becoming the top-most view controller.
-    /// - Parameter newFlow: The `ViewControllable` to be attached.
-    /// - Parameter completion: A closure to be executed after the operation is complete.
-    /// 
-    /// > Note: You are responsible for removing the previous `ViewControllable` from the view hierarchy.
-    func attach(newFlow: ViewControllable, completion: (() -> Void)?) {
-        self.activeFlow = newFlow
+    /// Overlays the given `ViewControllable` onto the current view hierarchy.
+    /// - Parameter viewControllable: The `ViewControllable` to be overlaid.
+    func overlay(_ viewControllable: ViewControllable) {
+        let viewController = viewControllable.uiviewController
+        self.addChild(viewController)
+        self.view.addSubview(viewController.view)
         
-        self.addChild(newFlow.uiviewController)
-        self.view.addSubview(newFlow.uiviewController.view)
-        newFlow.uiviewController.didMove(toParent: self)
+        viewController.view.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            viewController.view.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
+            viewController.view.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
+            viewController.view.topAnchor.constraint(equalTo: self.view.topAnchor),
+            viewController.view.bottomAnchor.constraint(equalTo: self.view.bottomAnchor)
+        ])
         
-        completion?()
+        viewController.didMove(toParent: self)
+        self.overlaidViewControllable = viewControllable
     }
     
     
-    /// Clears the  `ViewControllable` from the view hierarchy.
-    /// - Parameter completion: A closure to be executed after the cleanup is complete.
-    func clear(completion: (() -> Void)?) {
-        self.activeFlow?.uiviewController.view.removeFromSuperview()
-        self.activeFlow?.uiviewController.removeFromParent()
-        
-        self.activeFlow = nil
-        
-        completion?()
+    /// Clears the overlaid `ViewControllable` from the view hierarchy.
+    func clearOverlay() {
+        self.overlaidViewControllable?.uiviewController.willMove(toParent: nil)
+        self.overlaidViewControllable?.uiviewController.view.removeFromSuperview()
+        self.overlaidViewControllable?.uiviewController.removeFromParent()
+        self.overlaidViewControllable = nil
+    }
+    
+    
+    /// Presents the given `ViewControllable` modally.
+    /// - Parameter viewControllable: The `ViewControllable` to be presented.
+    func present(_ viewControllable: ViewControllable) {
+        let viewController = viewControllable.uiviewController
+        self.present(viewController, animated: true, completion: nil)
+        self.overlaidViewControllable = viewControllable
+    }
+    
+    
+    /// Dismisses the currently presented `ViewControllable`.
+    func dismiss() {
+        self.overlaidViewControllable?.uiviewController.dismiss(animated: true, completion: nil)
+        self.overlaidViewControllable = nil
     }
     
 }

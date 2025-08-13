@@ -3,26 +3,27 @@ import RxSwift
 
 
 
-/// Contract adhered to by ``___VARIABLE_productName___Router``, listing the attributes and/or actions 
-/// that ``___VARIABLE_productName___Interactor`` is allowed to access or invoke.
+/// Interface exposed by ``___VARIABLE_productName___Router`` to enable RIB tree manipulation.
 protocol ___VARIABLE_productName___Routing: Routing {
         
     
-    /// Cleanses the view hierarchy of any `ViewControllable` instances this RIB may have added.
-    func cleanupViews()
+    /// Removes any `ViewControllable` this RIB may have added to the view hierarchy.
+    func clearViewControllers()
     
 }
 
 
 
-/// Contract adhered to by the Interactor of `___VARIABLE_productName___RIB`'s parent, listing the attributes and/or actions
-/// that ``___VARIABLE_productName___Interactor`` is allowed to access or invoke.
+/// Interface exposed by the Interactor of `___VARIABLE_productName___RIB`'s parent. 
+/// 
+/// Listener protocols enables vertical communication between RIBs.
 protocol ___VARIABLE_productName___Listener: AnyObject {}
 
 
 
-/// The functionality centre of `___VARIABLE_productName___RIB`, where flow, communication, and coordination
-/// are determined and initiated from.
+/// Implements business logic and lifecycle coordination for `___VARIABLE_productName___RIB`.
+///
+/// Acts as the source of truth for state, handles user intent, and delegates navigation to the router.
 final class ___VARIABLE_productName___Interactor: Interactor, ___VARIABLE_productName___Interactable {
     
     
@@ -38,7 +39,7 @@ final class ___VARIABLE_productName___Interactor: Interactor, ___VARIABLE_produc
     var component: ___VARIABLE_productName___Component
     
     
-    /// Constructs an instance of ``___VARIABLE_productName___Interactor``.
+    /// Initializes an instance of ``___VARIABLE_productName___Interactor``.
     /// - Parameter component: The component of this RIB.
     init(component: ___VARIABLE_productName___Component) {
         self.component = component
@@ -54,6 +55,7 @@ final class ___VARIABLE_productName___Interactor: Interactor, ___VARIABLE_produc
     /// Customization point that is invoked before self is detached.
     override func willResignActive() {
         super.willResignActive()
+        router?.clearViewControllers()
     }
     
 }

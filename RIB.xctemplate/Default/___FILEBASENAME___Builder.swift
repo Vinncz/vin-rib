@@ -2,8 +2,9 @@ import RIBs
 
 
 
-/// A set of properties that are required by `___VARIABLE_productName___RIB` to function, 
-/// supplied from the scope of its parent.
+/// A "manifest of dependencies" required by `___VARIABLE_productName___RIB`, to be supplied from the scope of its parent.
+/// 
+/// Dependency protocols enable downward and facilitate sibling communications, namely through streams.
 protocol ___VARIABLE_productName___Dependency: Dependency {
     
     
@@ -16,21 +17,8 @@ protocol ___VARIABLE_productName___Dependency: Dependency {
 
 
 
-/// Concrete implementation of the ``___VARIABLE_productName___Dependency`` protocol. 
-/// Provides dependencies needed by all RIBs that will ever attach themselves to ``___VARIABLE_productName___Router``.
-final class ___VARIABLE_productName___Component: Component<___VARIABLE_productName___Dependency> {
-    
-    
-    /// A `UIViewController` that can be controlled by `___VARIABLE_productName___RIB`.
-    // TODO: Convert to camelCase.
-    //  ↓
-    var ___VARIABLE_productName___ViewController: ___VARIABLE_productName___ViewControllable {
-        // TODO: Convert to camelCase.
-        //                ↓
-        dependency.___VARIABLE_productName___ViewController
-    }
-    
-}
+/// Provider of dependencies for `___VARIABLE_productName___RIB` and its children.
+final class ___VARIABLE_productName___Component: Component<___VARIABLE_productName___Dependency> {}
 
 
 
@@ -39,8 +27,7 @@ extension ___VARIABLE_productName___Component {}
 
 
 
-/// Contract adhered to by ``___VARIABLE_productName___Builder``, listing necessary actions to
-/// construct a functional `___VARIABLE_productName___RIB`.
+/// Type that can build a `___VARIABLE_productName___RIB` and wire its internal dependencies.
 protocol ___VARIABLE_productName___Buildable: Buildable {
     
     
@@ -56,8 +43,8 @@ protocol ___VARIABLE_productName___Buildable: Buildable {
 final class ___VARIABLE_productName___Builder: Builder<___VARIABLE_productName___Dependency>, ___VARIABLE_productName___Buildable {
     
     
-    /// Creates an instance of ``___VARIABLE_productName___Builder``.
-    /// - Parameter dependency: Instance of other RIB's `Component` that conforms to this RIB's `Dependency` protocol.
+    /// Initializes an instance of ``___VARIABLE_productName___Builder``.
+    /// - Parameter dependency: Other RIB's `Component` that conforms to ``___VARIABLE_productName___Dependency``.
     override init(dependency: ___VARIABLE_productName___Dependency) {
         super.init(dependency: dependency)
     }
@@ -73,7 +60,7 @@ final class ___VARIABLE_productName___Builder: Builder<___VARIABLE_productName__
             
         return ___VARIABLE_productName___Router(
             interactor: interactor, 
-            viewController: component.___VARIABLE_productName___ViewController
+            viewController: component.dependency.___VARIABLE_productName___ViewController
         )
     }
     

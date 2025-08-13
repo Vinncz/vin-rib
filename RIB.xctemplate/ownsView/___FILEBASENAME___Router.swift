@@ -2,10 +2,10 @@ import RIBs
 
 
 
-/// Contract adhered to by ``___VARIABLE_productName___Interactor``, listing the attributes and/or actions 
-/// that ``___VARIABLE_productName___Router`` is allowed to access or invoke.
+/// Interface exposed by ``___VARIABLE_productName___Interactor`` to coordinate routing and receive upstream events.
 /// 
-/// Conform this `Interactable` protocol with this RIB's children's `Listener` protocols.
+/// Conform this protocol to its children's `Listener` protocols,
+/// to enable ``___VARIABLE_productName___Interactor`` to respond to its children's events.
 protocol ___VARIABLE_productName___Interactable: Interactable {
     
     
@@ -20,35 +20,43 @@ protocol ___VARIABLE_productName___Interactable: Interactable {
 
 
 
-/// Contract adhered to by ``___VARIABLE_productName___ViewController``, listing the attributes and/or actions
-/// that ``___VARIABLE_productName___Router`` is allowed to access or invoke.
+/// Interface exposed by ``___VARIABLE_productName___ViewController`` to manipulate the view hierarchy.
 protocol ___VARIABLE_productName___ViewControllable: ViewControllable {
     
     
-    /// Attaches the given `ViewControllable` into the view hierarchy, becoming the top-most view controller.
-    /// - Parameter newFlow: The `ViewControllable` to be attached.
-    /// - Parameter completion: A closure to be executed after the operation is complete.
-    /// 
-    /// > Note: You are responsible for removing the previous `ViewControllable` from the view hierarchy.
-    func attach(newFlow: ViewControllable, completion: (() -> Void)?)
+    /// Overlays the given `ViewControllable` onto the current view hierarchy.
+    /// - Parameter viewControllable: The `ViewControllable` to be overlaid.
+    func overlay(_ viewControllable: ViewControllable)
     
     
-    /// Clears the  `ViewControllable` from the view hierarchy.
-    /// - Parameter completion: A closure to be executed after the cleanup is complete.
-    func clear(completion: (() -> Void)?)
+    /// Clears the overlaid `ViewControllable` from the view hierarchy.
+    func clearOverlay()
+    
+    
+    /// Presents the given `ViewControllable` modally.
+    /// - Parameter viewControllable: The `ViewControllable` to be presented.
+    func present(_ viewControllable: ViewControllable)
+    
+    
+    /// Dismisses the currently presented `ViewControllable`.
+    func dismiss()
     
 }
 
 
 
-/// The attachment point of `___VARIABLE_productName___RIB`.
+/// Manages a RIB that owns a view controller.
 final class ___VARIABLE_productName___Router: ViewableRouter<___VARIABLE_productName___Interactable, ___VARIABLE_productName___ViewControllable> {
     
     
-    /// Constructs an instance of ``___VARIABLE_productName___Router``.
-    /// - Parameter interactor: The interactor for this RIB.
-    /// - Parameter viewController: The view controller for this RIB.
-    override init(interactor: ___VARIABLE_productName___Interactable, viewController: ___VARIABLE_productName___ViewControllable) {
+    /// Initializes an instance of ``___VARIABLE_productName___Router``.
+    /// - Parameters:
+    ///   - interactor: The interactor for this RIB.
+    ///   - viewController: The view controller for this RIB.
+    override init (
+        interactor: ___VARIABLE_productName___Interactable, 
+        viewController: ___VARIABLE_productName___ViewControllable
+    ) {
         super.init(interactor: interactor, viewController: viewController)
         interactor.router = self
     }
@@ -62,13 +70,14 @@ final class ___VARIABLE_productName___Router: ViewableRouter<___VARIABLE_product
 
 
 /// Conformance extension to the ``___VARIABLE_productName___Routing`` protocol.
-/// Contains everything accessible or invokable by ``___VARIABLE_productName___Interactor``.
+/// Contains methods that can be invoked by ``___VARIABLE_productName___Interactor``.
 extension ___VARIABLE_productName___Router: ___VARIABLE_productName___Routing {
     
     
-    /// Cleanses the view hierarchy of any `ViewControllable` instances this RIB may have added.
-    func cleanupViews() {
-        viewController.clear(completion: nil)
+    /// Removes the view hierarchy from any `ViewControllable` instances this RIB may have added.
+    func clearViewControllers() {
+        viewController.dismiss()
+        viewController.clearOverlay()
         // TODO: detach any child RIBs
         // TODO: nullify any references to child RIBs
     }
