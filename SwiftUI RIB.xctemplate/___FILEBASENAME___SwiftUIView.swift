@@ -7,7 +7,7 @@ struct ___VARIABLE_productName___SwiftUIView: View {
     
     
     /// Two-ways communicator between ``___VARIABLE_productName___Interactor`` and self.
-    @Bindable var viewModel: ___VARIABLE_productName___SwiftUIViewModel
+    @Bindable var viewModel: ___VARIABLE_productName___ViewModel
     
     
     var body: some View {
@@ -19,6 +19,6 @@ struct ___VARIABLE_productName___SwiftUIView: View {
 
 
 #Preview {
-    @Previewable var viewModel = ___VARIABLE_productName___SwiftUIViewModel()
+    @Previewable var viewModel = ___VARIABLE_productName___ViewModel()
     ___VARIABLE_productName___SwiftUIView(viewModel: viewModel)
 }

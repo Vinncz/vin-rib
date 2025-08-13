@@ -3,24 +3,22 @@ import RxSwift
 
 
 
-/// Contract adhered to by ``___VARIABLE_productName___Router``, listing the attributes and/or actions 
-/// that ``___VARIABLE_productName___Interactor`` is allowed to access or invoke.
+/// Interface exposed by ``___VARIABLE_productName___Router`` to enable RIB tree manipulation.
 protocol ___VARIABLE_productName___Routing: ViewableRouting {
     
     
-    /// Removes the view hierarchy from any `ViewControllable` instances this RIB may have added.
+    /// Removes any `ViewControllable` this RIB may have added to the view hierarchy.
     func clearViewControllers()
     
     
-    /// Removes the hosting controller (swiftui embed) from the view hierarchy and deallocates it.
+    /// Removes the hosting controller (SwiftUI embed) from the view hierarchy and deallocates it.
     func detachSwiftUI()
     
 }
 
 
 
-/// Contract adhered to by ``___VARIABLE_productName___ViewController``, listing the attributes and/or actions
-/// that ``___VARIABLE_productName___Interactor`` is allowed to access or invoke.
+/// Interface exposed by ``___VARIABLE_productName___ViewController`` to enable view manipulation.
 protocol ___VARIABLE_productName___Presentable: Presentable {
     
     
@@ -29,7 +27,8 @@ protocol ___VARIABLE_productName___Presentable: Presentable {
     
     
     /// Binds the view model to the view.
-    func bind(viewModel: ___VARIABLE_productName___SwiftUIViewModel)
+    /// - Parameter viewModel: The view model to bind.
+    func bind(viewModel: ___VARIABLE_productName___ViewModel)
     
     
     /// Unbinds the view model from the view.
@@ -39,14 +38,16 @@ protocol ___VARIABLE_productName___Presentable: Presentable {
 
 
 
-/// Contract adhered to by the Interactor of `___VARIABLE_productName___RIB`'s parent, listing the attributes and/or actions
-/// that ``___VARIABLE_productName___Interactor`` is allowed to access or invoke.
+/// Interface exposed by the Interactor of `___VARIABLE_productName___RIB`'s parent. 
+/// 
+/// Listener protocols enables vertical communication between RIBs.
 protocol ___VARIABLE_productName___Listener: AnyObject {}
 
 
 
-/// The functionality centre of `___VARIABLE_productName___RIB`, where flow, communication, and coordination
-/// are determined and initiated from.
+/// Implements business logic and lifecycle coordination for `___VARIABLE_productName___RIB`.
+///
+/// Acts as the source of truth for state, handles user intent, and delegates navigation to the router.
 final class ___VARIABLE_productName___Interactor: PresentableInteractor<___VARIABLE_productName___Presentable>, ___VARIABLE_productName___Interactable {
     
     
@@ -63,11 +64,14 @@ final class ___VARIABLE_productName___Interactor: PresentableInteractor<___VARIA
     
     
     /// Bridge to the ``___VARIABLE_productName___SwiftUIVIew``.
-    private var viewModel = ___VARIABLE_productName___SwiftUIViewModel()
+    private var viewModel = ___VARIABLE_productName___ViewModel()
     
     
-    /// Constructs an instance of ``___VARIABLE_productName___Interactor``.
-    /// - Parameter component: The component of this RIB.
+    /// Initializes an instance of ``___VARIABLE_productName___Interactor``.
+    /// 
+    /// - Parameters:
+    ///   - component: The component of this RIB.
+    ///   - presenter: The view controller that conforms to ``___VARIABLE_productName___Presentable``.
     init(component: ___VARIABLE_productName___Component, presenter: ___VARIABLE_productName___Presentable) {
         self.component = component
         
@@ -104,5 +108,14 @@ final class ___VARIABLE_productName___Interactor: PresentableInteractor<___VARIA
 
 
 /// Conformance to the ``___VARIABLE_productName___PresentableListener`` protocol.
-/// Contains everything accessible or invokable by ``___VARIABLE_productName___ViewController``.
-extension ___VARIABLE_productName___Interactor: ___VARIABLE_productName___PresentableListener {}
+/// Contains methods that can be invoked by ``___VARIABLE_productName___ViewController``.
+extension ___VARIABLE_productName___Interactor: ___VARIABLE_productName___PresentableListener {
+    
+    
+    /// Informs ``___VARIABLE_productName___Router`` that the navigation controller has exited the view hierarchy; 
+    /// commonly due to being popped off a navigation stack or dismissed.
+    func didExitViewHierarchy() {
+        router?.clearViewControllers()
+    }
+    
+}
